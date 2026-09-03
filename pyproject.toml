@@ -1,0 +1,14 @@
+[project]
+name = "arc-composite"
+version = "0.2.0"
+description = "Lightweight model-agnostic compositor for preserving source regions and blending generated edits in ComfyUI."
+license = { file = "LICENSE" }
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/DHan315/ComfyUI-ARC-Composite"
+"Bug Tracker" = "https://github.com/DHan315/ComfyUI-ARC-Composite/issues"
+
+[tool.comfy]
+PublisherId = "dhan315"
+DisplayName = "ARC Composite"
