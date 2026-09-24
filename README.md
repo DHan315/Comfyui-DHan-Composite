@@ -1,8 +1,8 @@
-# ARC Composite v0.2.0
+# Comfyui-DHan-Composite v0.2.0
 
 A lightweight, model-agnostic ComfyUI compositor for blending generated image edits back onto a source image while preserving untouched regions.
 
-ARC Composite is designed as a post-processing step for image-editing workflows. The edited image can come from an API model such as Nano Banana / Gemini or GPT Image, a local image-edit model, or any other workflow that outputs a standard ComfyUI `IMAGE`.
+Comfyui-DHan-Composite is designed as a post-processing step for image-editing workflows. The edited image can come from an API model such as Nano Banana / Gemini or GPT Image, a local image-edit model, or any other workflow that outputs a standard ComfyUI `IMAGE`.
 
 The node does not depend on the model that produced the edit. It works from the source image, generated image, and edit mask, then builds a composite mask, feathers the transition, and optionally performs simple seam color matching.
 
@@ -16,7 +16,7 @@ Image-edit model / API
 (Nano Banana, GPT Image, local model, etc.)
           |
           v
-    ARC Composite
+    Comfyui-DHan-Composite
           |
           v
       Final Image
@@ -50,7 +50,7 @@ Image-edit model / API
 
 ## Compatibility
 
-ARC Composite operates on standard ComfyUI `IMAGE` and `MASK` types, so it is not tied to a specific image-generation model or API.
+Comfyui-DHan-Composite operates on standard ComfyUI `IMAGE` and `MASK` types, so it is not tied to a specific image-generation model or API.
 
 Examples include:
 
