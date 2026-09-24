@@ -111,6 +111,13 @@ class ARCCompositeNode:
     """Model-agnostic compositor for image-editing workflows."""
 
     @classmethod
+    def VALIDATE_INPUTS(cls, mask_mode):
+        if mask_mode in ("Edit Mask", "Edit Mask + Detected Changes", "Detected Changes",
+                         "ARC Mask", "ARC Mask + Detected Changes"):
+            return True
+        return f"Unknown mask mode: {mask_mode}"
+
+    @classmethod
     def INPUT_TYPES(cls):
         return {
             "required": {
