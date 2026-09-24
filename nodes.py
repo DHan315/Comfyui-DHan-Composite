@@ -1,4 +1,4 @@
-"""ARC Composite v0.2.0
+"""Comfyui-DHan-Composite v0.2.0
 
 Lightweight, model-agnostic post-generation compositor for ComfyUI workflows.
 Designed to preserve source regions while blending generated image edits.
@@ -18,13 +18,13 @@ def _image4(x):
     if x.ndim == 3:
         x = x.unsqueeze(0)
     if x.ndim != 4:
-        raise ValueError(f"ARC Composite expected IMAGE [B,H,W,C], got {tuple(x.shape)}")
+        raise ValueError(f"Comfyui-DHan-Composite expected IMAGE [B,H,W,C], got {tuple(x.shape)}")
     if x.shape[-1] == 1:
         x = x.repeat(1, 1, 1, 3)
     elif x.shape[-1] == 4:
         x = x[..., :3]
     elif x.shape[-1] != 3:
-        raise ValueError(f"ARC Composite expected RGB/RGBA image, got {tuple(x.shape)}")
+        raise ValueError(f"Comfyui-DHan-Composite expected RGB/RGBA image, got {tuple(x.shape)}")
     return x.clamp(0.0, 1.0)
 
 
@@ -49,7 +49,7 @@ def _mask3(x, batch, h, w, device):
     elif x.ndim == 4 and x.shape[1] == 1:
         x = x[:, 0]
     if x.ndim != 3:
-        raise ValueError(f"ARC Composite expected MASK [B,H,W], got {tuple(x.shape)}")
+        raise ValueError(f"Comfyui-DHan-Composite expected MASK [B,H,W], got {tuple(x.shape)}")
     if x.shape[0] == 1 and batch > 1:
         x = x.repeat(batch, 1, 1)
     elif x.shape[0] != batch:
@@ -108,7 +108,7 @@ def _seam_match(source, generated, mask, strength, width):
 
 
 class ARCCompositeNode:
-    """ARC-native compositor with a deliberately small, ARC-specific contract."""
+    """Model-agnostic compositor for image-editing workflows."""
 
     @classmethod
     def INPUT_TYPES(cls):
@@ -117,7 +117,7 @@ class ARCCompositeNode:
                 "generated_image": ("IMAGE",),
                 "source_image": ("IMAGE",),
                 "edit_mask": ("MASK",),
-                "mask_mode": (["ARC Mask", "ARC Mask + Detected Changes", "Detected Changes"], {"default": "ARC Mask"}),
+                "mask_mode": (["Edit Mask", "Edit Mask + Detected Changes", "Detected Changes"], {"default": "Edit Mask"}),
                 "change_sensitivity": ("FLOAT", {"default": 0.20, "min": 0.0, "max": 1.0, "step": 0.01}),
                 "mask_grow_px": ("INT", {"default": 0, "min": 0, "max": 256, "step": 1}),
                 "edge_feather_px": ("INT", {"default": 12, "min": 0, "max": 256, "step": 1}),
@@ -154,7 +154,7 @@ class ARCCompositeNode:
 
         if mask_mode == "Detected Changes":
             working = detected
-        elif mask_mode == "ARC Mask + Detected Changes":
+        elif mask_mode in ("Edit Mask + Detected Changes", "ARC Mask + Detected Changes"):
             working = torch.maximum(authored, detected)
         else:
             working = authored
@@ -170,10 +170,10 @@ class ARCCompositeNode:
         final_px = int(hard_mask.sum().item())
         total_px = batch * h * w
         report = "\n".join([
-            "ARC COMPOSITE",
+            "COMFYUI-DHAN COMPOSITE",
             f"Version: {_VERSION}",
             f"Canvas: {w}x{h}",
-            f"Mask mode: {mask_mode}",
+            f"Mask mode: {mask_mode.replace('ARC Mask', 'Edit Mask')}",
             f"Detected-change threshold: {threshold:.4f}",
             f"Mask grow: {int(mask_grow_px)} px",
             f"Edge feather: {int(edge_feather_px)} px",
@@ -199,3 +199,4 @@ NODE_CLASS_MAPPINGS = {
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ARCCompositeNode": "Comfyui-DHan-Composite",
 }
+
