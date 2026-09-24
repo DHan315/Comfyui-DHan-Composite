@@ -16,7 +16,7 @@ Image-edit model / API
 (Nano Banana, GPT Image, local model, etc.)
           |
           v
-    Comfyui-DHan-Composite
+    DHan-Composite
           |
           v
       Final Image
