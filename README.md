@@ -27,7 +27,7 @@ Image-edit model / API
 - `generated_image` — edited/generated image returned by an API or local model
 - `source_image` — original source/canvas image to preserve outside the composite region
 - `edit_mask` — authored edit mask
-- `mask_mode` — ARC Mask / ARC Mask + Detected Changes / Detected Changes
+- `mask_mode` — Edit Mask / Edit Mask + Detected Changes / Detected Changes
 - `change_sensitivity` — threshold used when detecting differences between source and generated images
 - `mask_grow_px` — expands the working composite mask
 - `edge_feather_px` — softens the transition between source and generated regions
@@ -66,3 +66,4 @@ GPL-3.0
 ## Author
 
 Developed by DHan315.
+
