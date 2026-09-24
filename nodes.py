@@ -129,7 +129,7 @@ class ARCCompositeNode:
     RETURN_TYPES = ("IMAGE", "MASK", "STRING", "IMAGE")
     RETURN_NAMES = ("image", "composite_mask", "report", "debug_view")
     FUNCTION = "run"
-    CATEGORY = "ARC"
+    CATEGORY = "Comfyui-DHan/Composite"
     DESCRIPTION = "Model-agnostic masked compositor for blending API or local image edits back onto a source image."
 
     def run(self, generated_image, source_image, edit_mask, mask_mode,
@@ -197,5 +197,5 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ARCCompositeNode": "ARC Composite",
+    "ARCCompositeNode": "Comfyui-DHan-Composite",
 }
